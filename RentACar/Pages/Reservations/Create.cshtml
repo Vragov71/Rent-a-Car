@@ -1,0 +1,70 @@
+@page
+@model RentACar.Pages.Reservations.CreateModel
+@{
+    ViewData["Title"] = "Нова заявка за наем";
+}
+
+<h2 class="mb-4">Нова заявка за наем</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <form method="post" asp-page-handler="Search">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="mb-3">
+                <label asp-for="StartDate" class="form-label">Начална дата</label>
+                <input asp-for="StartDate" class="form-control" type="date" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="EndDate" class="form-label">Крайна дата</label>
+                <input asp-for="EndDate" class="form-control" type="date" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-outline-dark">Търси свободни коли</button>
+        </form>
+    </div>
+</div>
+
+@if (Model.AvailableCars != null)
+{
+    <hr class="my-4" />
+    <h4>Свободни автомобили за периода @Model.StartDate.ToString("dd.MM.yyyy") – @Model.EndDate.ToString("dd.MM.yyyy")</h4>
+
+    @if (!Model.AvailableCars.Any())
+    {
+        <p class="text-muted">Няма свободни автомобили за избрания период.</p>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+            @foreach (var car in Model.AvailableCars)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@car.Make @car.Model (@car.Year)</h5>
+                            <p class="card-text text-muted small">
+                                Места: @car.Seats<br />
+                                @car.Description
+                            </p>
+                            <p class="fw-bold">@car.PricePerDay лв./ден</p>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <form method="post" asp-page-handler="Reserve">
+                                <input type="hidden" name="carId" value="@car.Id" />
+                                <input type="hidden" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+                                <input type="hidden" name="endDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+                                <button type="submit" class="btn btn-dark btn-sm">Резервирай</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

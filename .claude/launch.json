@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "RentACar (HTTP)",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "RentACar/RentACar.csproj", "--launch-profile", "http"],
+      "port": 5198
+    },
+    {
+      "name": "RentACar (HTTPS)",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "RentACar/RentACar.csproj", "--launch-profile", "https"],
+      "port": 7226
+    }
+  ]
+}
