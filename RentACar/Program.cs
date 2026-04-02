@@ -1,26 +1,71 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using RentACar.Data;
+using RentACar.Data.Models;
+using RentACar.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+// ---- Слой за данни (Data Layer) ----
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// ---- Идентификация и роли (Identity) ----
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.Password.RequireDigit = true;
+        options.Password.RequiredLength = 6;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+    })
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+// ---- Слой за услуги (Services Layer) ----
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+// ---- Razor Pages ----
+builder.Services.AddRazorPages(options =>
+{
+    // Само Admin страниците изискват Admin роля
+    options.Conventions.AuthorizeFolder("/Admin", "RequireAdminRole");
+    options.Conventions.AuthorizeFolder("/Cars/Manage", "RequireAdminRole");
+    options.Conventions.AuthorizeFolder("/Reservations/Manage", "RequireAdminRole");
+    options.Conventions.AuthorizePage("/Reservations/Create");
+    options.Conventions.AuthorizePage("/Reservations/MyReservations");
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ---- Middleware ----
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
-app.MapRazorPages()
-    .WithStaticAssets();
+app.MapRazorPages().WithStaticAssets();
+
+// ---- Seed начални данни ----
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await SeedData.InitializeAsync(services);
+}
 
 app.Run();

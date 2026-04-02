@@ -1,0 +1,17 @@
+@page "{id}"
+@model RentACar.Pages.Admin.Users.DeleteModel
+@{
+    ViewData["Title"] = "Изтрий потребител";
+}
+
+<h2 class="mb-4">Изтриване на потребител</h2>
+
+<div class="alert alert-warning">
+    Сигурен ли си, че искаш да изтриеш потребител <strong>@Model.AppUser.UserName</strong> (@Model.AppUser.FirstName @Model.AppUser.LastName)?
+</div>
+
+<form method="post">
+    <input type="hidden" asp-for="AppUser.Id" />
+    <button type="submit" class="btn btn-danger">Изтрий</button>
+    <a asp-page="Index" class="btn btn-outline-secondary ms-2">Отказ</a>
+</form>

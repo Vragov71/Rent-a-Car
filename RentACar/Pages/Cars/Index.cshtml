@@ -1,0 +1,45 @@
+@page
+@model RentACar.Pages.Cars.IndexModel
+@{
+    ViewData["Title"] = "Автомобили";
+}
+
+<h2 class="mb-4">Налични автомобили</h2>
+
+@if (!Model.Cars.Any())
+{
+    <p class="text-muted">Все още няма добавени автомобили.</p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var car in Model.Cars)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@car.Make @car.Model (@car.Year)</h5>
+                        <p class="card-text text-muted small">
+                            Места: @car.Seats<br />
+                            @if (!string.IsNullOrEmpty(car.Description))
+                            {
+                                <span>@car.Description</span>
+                            }
+                        </p>
+                        <p class="fw-bold fs-5">@car.PricePerDay лв./ден</p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <a asp-page="/Reservations/Create" asp-route-carId="@car.Id" class="btn btn-dark btn-sm">Резервирай</a>
+                        }
+                        else
+                        {
+                            <a asp-page="/Account/Login" class="btn btn-outline-dark btn-sm">Влез за да резервираш</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

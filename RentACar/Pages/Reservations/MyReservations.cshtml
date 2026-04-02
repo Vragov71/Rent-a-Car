@@ -1,0 +1,53 @@
+@page
+@model RentACar.Pages.Reservations.MyReservationsModel
+@{
+    ViewData["Title"] = "Моите заявки";
+}
+
+<h2 class="mb-4">Моите заявки за наем</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (!Model.Reservations.Any())
+{
+    <p class="text-muted">Нямаш направени заявки.</p>
+    <a asp-page="/Reservations/Create" class="btn btn-dark">Направи заявка</a>
+}
+else
+{
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Автомобил</th>
+                <th>Начало</th>
+                <th>Край</th>
+                <th>Дни</th>
+                <th>Обща цена</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model.Reservations)
+            {
+                var days = (int)(r.EndDate - r.StartDate).TotalDays;
+                var total = days * r.Car.PricePerDay;
+                <tr>
+                    <td>@r.Car.Make @r.Car.Model (@r.Car.Year)</td>
+                    <td>@r.StartDate.ToString("dd.MM.yyyy")</td>
+                    <td>@r.EndDate.ToString("dd.MM.yyyy")</td>
+                    <td>@days</td>
+                    <td>@total лв.</td>
+                    <td>
+                        <form method="post" asp-page-handler="Cancel" asp-route-id="@r.Id"
+                              onsubmit="return confirm('Сигурен ли си, че искаш да откажеш тази заявка?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Откажи</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
