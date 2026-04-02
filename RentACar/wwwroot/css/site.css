@@ -1,31 +1,99 @@
+:root {
+    --purple-dark: #5b3d8a;
+    --purple-main: #7c5cbf;
+    --purple-light: #a98de0;
+    --purple-pale: #f3eeff;
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #faf9ff;
+    color: #2d2040;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Navbar */
+.navbar-purple {
+    background-color: var(--purple-dark);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.navbar-purple .navbar-brand,
+.navbar-purple .nav-link,
+.navbar-purple .nav-link:hover {
+    color: #fff !important;
+}
+
+.navbar-purple .nav-link:hover {
+    color: var(--purple-light) !important;
+}
+
+.navbar-purple .dropdown-menu {
+    border-color: var(--purple-light);
+}
+
+.navbar-purple .dropdown-item:hover {
+    background-color: var(--purple-pale);
+    color: var(--purple-dark);
+}
+
+/* Buttons */
+.btn-purple {
+    background-color: var(--purple-main);
+    border-color: var(--purple-main);
+    color: #fff;
+}
+
+.btn-purple:hover {
+    background-color: var(--purple-dark);
+    border-color: var(--purple-dark);
+    color: #fff;
+}
+
+.btn-outline-purple {
+    border-color: var(--purple-main);
+    color: var(--purple-main);
+}
+
+.btn-outline-purple:hover {
+    background-color: var(--purple-main);
+    color: #fff;
+}
+
+/* Cards */
+.card {
+    border-color: #e0d9f5;
+    border-radius: 12px;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(124, 92, 191, 0.15);
+    transition: box-shadow 0.2s;
+}
+
+/* Table */
+.table-purple thead {
+    background-color: var(--purple-dark);
+    color: #fff;
+}
+
+/* Focus ring */
+.btn:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(124, 92, 191, 0.35);
+}
+
+/* Footer */
+footer {
+    border-top-color: #e0d9f5 !important;
+    color: #9b8ab8;
 }

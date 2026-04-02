@@ -2,9 +2,6 @@ using RentACar.Data.Models;
 
 namespace RentACar.Services;
 
-/// <summary>
-/// Интерфейс за административно управление на потребители.
-/// </summary>
 public interface IUserService
 {
     Task<IEnumerable<ApplicationUser>> GetAllUsersAsync();

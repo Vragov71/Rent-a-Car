@@ -4,9 +4,6 @@ using RentACar.Data.Models;
 
 namespace RentACar.Services;
 
-/// <summary>
-/// Имплементация на услугата за управление на потребители (Admin).
-/// </summary>
 public class UserService : IUserService
 {
     private readonly ApplicationDbContext _context;

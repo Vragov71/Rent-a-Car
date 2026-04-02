@@ -3,9 +3,6 @@ using RentACar.Data.Models;
 
 namespace RentACar.Data;
 
-/// <summary>
-/// Зарежда начални данни в базата (роли, администратор, примерни коли).
-/// </summary>
 public static class SeedData
 {
     public static async Task InitializeAsync(IServiceProvider serviceProvider)
@@ -14,10 +11,8 @@ public static class SeedData
         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
-        // Прилагаме миграциите автоматично
         await context.Database.EnsureCreatedAsync();
 
-        // Създаваме роли
         string[] roles = { "Admin", "User" };
         foreach (var role in roles)
         {
@@ -27,7 +22,6 @@ public static class SeedData
             }
         }
 
-        // Създаваме администратор по подразбиране
         const string adminEmail = "admin@rentacar.bg";
         if (await userManager.FindByEmailAsync(adminEmail) == null)
         {
@@ -49,7 +43,6 @@ public static class SeedData
             }
         }
 
-        // Добавяме примерни коли ако базата е празна
         if (!context.Cars.Any())
         {
             context.Cars.AddRange(

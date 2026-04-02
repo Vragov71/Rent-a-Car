@@ -4,9 +4,6 @@ using RentACar.Data.Models;
 
 namespace RentACar.Services;
 
-/// <summary>
-/// Имплементация на услугата за управление на автомобили.
-/// </summary>
 public class CarService : ICarService
 {
     private readonly ApplicationDbContext _context;
