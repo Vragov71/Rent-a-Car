@@ -6,11 +6,9 @@ using RentACar.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ---- Слой за данни (Data Layer) ----
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ---- Идентификация и роли (Identity) ----
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
@@ -22,15 +20,12 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// ---- Слой за услуги (Services Layer) ----
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-// ---- Razor Pages ----
 builder.Services.AddRazorPages(options =>
 {
-    // Само Admin страниците изискват Admin роля
     options.Conventions.AuthorizeFolder("/Admin", "RequireAdminRole");
     options.Conventions.AuthorizeFolder("/Cars/Manage", "RequireAdminRole");
     options.Conventions.AuthorizeFolder("/Reservations/Manage", "RequireAdminRole");
@@ -45,7 +40,6 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-// ---- Middleware ----
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -61,7 +55,6 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages().WithStaticAssets();
 
-// ---- Seed начални данни ----
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;

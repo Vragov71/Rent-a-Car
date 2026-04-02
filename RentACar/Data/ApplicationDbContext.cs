@@ -4,9 +4,6 @@ using RentACar.Data.Models;
 
 namespace RentACar.Data;
 
-/// <summary>
-/// Контекст на базата данни – Entity Framework Core.
-/// </summary>
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -21,12 +18,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         base.OnModelCreating(builder);
 
-        // Уникалност на ЕГН
         builder.Entity<ApplicationUser>()
             .HasIndex(u => u.Egn)
             .IsUnique();
 
-        // Уникалност на имейл (вече е в Identity, но изрично за яснота)
         builder.Entity<ApplicationUser>()
             .HasIndex(u => u.Email)
             .IsUnique();

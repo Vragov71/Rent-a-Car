@@ -31,11 +31,11 @@ else
                     <div class="card-footer bg-white border-0">
                         @if (User.Identity?.IsAuthenticated == true)
                         {
-                            <a asp-page="/Reservations/Create" asp-route-carId="@car.Id" class="btn btn-dark btn-sm">Резервирай</a>
+                            <a asp-page="/Reservations/Create" asp-route-carId="@car.Id" class="btn btn-purple btn-sm">Резервирай</a>
                         }
                         else
                         {
-                            <a asp-page="/Account/Login" class="btn btn-outline-dark btn-sm">Влез за да резервираш</a>
+                            <a asp-page="/Account/Login" class="btn btn-outline-purple btn-sm">Влез за да резервираш</a>
                         }
                     </div>
                 </div>

@@ -7,9 +7,9 @@
 <div class="text-center py-5">
     <h1 class="display-4 fw-bold">Добре дошли в Rent A Car</h1>
     <p class="lead text-muted">Изберете автомобил и го наемете за желания период.</p>
-    <a asp-page="/Cars/Index" class="btn btn-dark btn-lg mt-3">Разгледай автомобилите</a>
+    <a asp-page="/Cars/Index" class="btn btn-purple btn-lg mt-3">Разгледай автомобилите</a>
     @if (User.Identity?.IsAuthenticated != true)
     {
-        <a asp-page="/Account/Register" class="btn btn-outline-dark btn-lg mt-3 ms-2">Регистрирай се</a>
+        <a asp-page="/Account/Register" class="btn btn-outline-purple btn-lg mt-3 ms-2">Регистрирай се</a>
     }
 </div>

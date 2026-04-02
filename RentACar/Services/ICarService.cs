@@ -2,9 +2,6 @@ using RentACar.Data.Models;
 
 namespace RentACar.Services;
 
-/// <summary>
-/// Интерфейс за управление на автомобили.
-/// </summary>
 public interface ICarService
 {
     Task<IEnumerable<Car>> GetAllCarsAsync();
