@@ -1,0 +1,46 @@
+@page
+@model RentACar.Pages.Reservations.Manage.IndexModel
+@{
+    ViewData["Title"] = "Управление на заявки";
+}
+
+<h2 class="mb-4">Всички заявки за наем</h2>
+
+@if (!Model.Reservations.Any())
+{
+    <p class="text-muted">Няма постъпили заявки.</p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Потребител</th>
+                <th>Автомобил</th>
+                <th>Начало</th>
+                <th>Край</th>
+                <th>Дни</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model.Reservations)
+            {
+                var days = (int)(r.EndDate - r.StartDate).TotalDays;
+                <tr>
+                    <td>@r.User.FirstName @r.User.LastName<br /><small class="text-muted">@r.User.UserName</small></td>
+                    <td>@r.Car.Make @r.Car.Model (@r.Car.Year)</td>
+                    <td>@r.StartDate.ToString("dd.MM.yyyy")</td>
+                    <td>@r.EndDate.ToString("dd.MM.yyyy")</td>
+                    <td>@days</td>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@r.Id"
+                              onsubmit="return confirm('Изтрий тази заявка?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Изтрий</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
