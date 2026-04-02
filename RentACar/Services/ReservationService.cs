@@ -4,9 +4,6 @@ using RentACar.Data.Models;
 
 namespace RentACar.Services;
 
-/// <summary>
-/// Имплементация на услугата за управление на заявки.
-/// </summary>
 public class ReservationService : IReservationService
 {
     private readonly ApplicationDbContext _context;
@@ -60,14 +57,12 @@ public class ReservationService : IReservationService
 
     public async Task<IEnumerable<Car>> GetAvailableCarsAsync(DateTime startDate, DateTime endDate)
     {
-        // Намираме ID-та на заети коли за периода
         var occupiedCarIds = await _context.Reservations
             .Where(r => r.StartDate < endDate && r.EndDate > startDate)
             .Select(r => r.CarId)
             .Distinct()
             .ToListAsync();
 
-        // Връщаме само свободните коли
         return await _context.Cars
             .Where(c => !occupiedCarIds.Contains(c.Id))
             .ToListAsync();

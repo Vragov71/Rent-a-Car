@@ -14,12 +14,12 @@
 @if (!Model.Reservations.Any())
 {
     <p class="text-muted">Нямаш направени заявки.</p>
-    <a asp-page="/Reservations/Create" class="btn btn-dark">Направи заявка</a>
+    <a asp-page="/Reservations/Create" class="btn btn-purple">Направи заявка</a>
 }
 else
 {
     <table class="table table-hover">
-        <thead class="table-dark">
+        <thead class="table-purple">
             <tr>
                 <th>Автомобил</th>
                 <th>Начало</th>

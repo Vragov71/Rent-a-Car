@@ -25,7 +25,7 @@
                 <input asp-for="EndDate" class="form-control" type="date" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-outline-dark">Търси свободни коли</button>
+            <button type="submit" class="btn btn-outline-purple">Търси свободни коли</button>
         </form>
     </div>
 </div>
@@ -59,7 +59,7 @@
                                 <input type="hidden" name="carId" value="@car.Id" />
                                 <input type="hidden" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
                                 <input type="hidden" name="endDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
-                                <button type="submit" class="btn btn-dark btn-sm">Резервирай</button>
+                                <button type="submit" class="btn btn-purple btn-sm">Резервирай</button>
                             </form>
                         </div>
                     </div>
