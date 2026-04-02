@@ -1,0 +1,42 @@
+@page
+@model RentACar.Pages.Cars.Manage.IndexModel
+@{
+    ViewData["Title"] = "Управление на автомобили";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Управление на автомобили</h2>
+    <a asp-page="Create" class="btn btn-dark">+ Добави кола</a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Марка / Модел</th>
+            <th>Година</th>
+            <th>Места</th>
+            <th>Цена/ден</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var car in Model.Cars)
+        {
+            <tr>
+                <td>@car.Make @car.Model</td>
+                <td>@car.Year</td>
+                <td>@car.Seats</td>
+                <td>@car.PricePerDay лв.</td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@car.Id" class="btn btn-sm btn-outline-secondary">Редактирай</a>
+                    <a asp-page="Delete" asp-route-id="@car.Id" class="btn btn-sm btn-outline-danger">Изтрий</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

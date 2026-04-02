@@ -1,0 +1,51 @@
+@page
+@model RentACar.Pages.Cars.Manage.CreateModel
+@{
+    ViewData["Title"] = "Добави автомобил";
+}
+
+<h2 class="mb-4">Добави нов автомобил</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="mb-3">
+                <label asp-for="Car.Make" class="form-label">Марка</label>
+                <input asp-for="Car.Make" class="form-control" />
+                <span asp-validation-for="Car.Make" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Car.Model" class="form-label">Модел</label>
+                <input asp-for="Car.Model" class="form-control" />
+                <span asp-validation-for="Car.Model" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Car.Year" class="form-label">Година</label>
+                <input asp-for="Car.Year" class="form-control" type="number" />
+                <span asp-validation-for="Car.Year" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Car.Seats" class="form-label">Брой места</label>
+                <input asp-for="Car.Seats" class="form-control" type="number" />
+                <span asp-validation-for="Car.Seats" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Car.Description" class="form-label">Описание (по избор)</label>
+                <textarea asp-for="Car.Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Car.Description" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Car.PricePerDay" class="form-label">Цена за ден (лв.)</label>
+                <input asp-for="Car.PricePerDay" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="Car.PricePerDay" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-dark">Запази</button>
+            <a asp-page="Index" class="btn btn-outline-secondary ms-2">Отказ</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
