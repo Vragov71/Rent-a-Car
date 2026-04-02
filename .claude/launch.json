@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "RentACar (HTTP)",
-      "runtimeExecutable": "dotnet",
+      "runtimeExecutable": "/usr/local/share/dotnet/dotnet",
       "runtimeArgs": ["run", "--project", "RentACar/RentACar.csproj", "--launch-profile", "http"],
       "port": 5198
     },
